@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `mobile` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `role` varchar(255) DEFAULT NULL,
+  `token` varchar(255) DEFAULT NULL,
   `date_registered` datetime NOT NULL,
   `verified` bit(1) DEFAULT NULL,
   `date_verified` datetime DEFAULT NULL,

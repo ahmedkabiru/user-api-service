@@ -45,6 +45,9 @@ public class User {
     @Column(name = "verified")
     private boolean verified;
 
+    @Column(name = "token")
+    private String token;
+
     @Column(name = "date_verified")
     private LocalDateTime dateVerified;
 

@@ -56,6 +56,7 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
+    @Transactional
     public void updateUser(User user,UserDto userDto) {
         user.setTitle(userDto.getTitle());
         user.setFirstName(userDto.getFirstName());
@@ -70,17 +71,20 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
+    @Transactional
     public void deactivateUser(User user) {
        user.setStatus(UserStatus.DEACTIVATED);
        userRepository.save(user);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
