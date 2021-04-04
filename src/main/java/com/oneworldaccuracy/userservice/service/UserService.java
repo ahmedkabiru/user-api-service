@@ -17,7 +17,7 @@ public interface UserService {
 
     Page<User> getAllUsers(Pageable pageable);
 
-    void updateUser(UserDto userDto);
+    void updateUser(User user,UserDto userDto);
 
     void deactivateUser(User user);
 
