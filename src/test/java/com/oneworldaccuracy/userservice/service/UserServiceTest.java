@@ -112,12 +112,18 @@ class UserServiceTest {
         UserDto userDtoUpdated = new UserDto();
         userDtoUpdated.setMobile("08033292804");
         user.setMobile(userDtoUpdated.getMobile());
-        Mockito.lenient().when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
+        Mockito.when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
         userService.updateUser(user,userDtoUpdated);
         Optional<User> userOptional = userRepository.findById(user.getUserId());
         assertTrue(userOptional.isPresent());
-        assertThat(userOptional.get().getMobile().equals(userDtoUpdated.getMobile()));
+        assertThat(userOptional.get().getMobile()).isEqualTo(userDtoUpdated.getMobile());
     }
 
 
+    @Test
+    void deactivateUser() {
+        User user = toUser(getUserDTO());
+        userService.deactivateUser(user);
+        Mockito.verify(userRepository).save(any(User.class));
+    }
 }
