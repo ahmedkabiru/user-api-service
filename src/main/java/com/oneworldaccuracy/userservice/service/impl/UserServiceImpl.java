@@ -71,7 +71,8 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     public void deactivateUser(User user) {
-
+       user.setStatus(UserStatus.DEACTIVATED);
+       userRepository.save(user);
     }
 
     @Override
