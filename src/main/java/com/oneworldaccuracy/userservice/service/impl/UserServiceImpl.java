@@ -6,12 +6,12 @@ import com.oneworldaccuracy.userservice.model.User;
 import com.oneworldaccuracy.userservice.model.UserStatus;
 import com.oneworldaccuracy.userservice.repository.UserRepository;
 import com.oneworldaccuracy.userservice.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -34,6 +34,7 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
+    @Transactional
     public User createUser(UserDto userDto) {
         var user = new User();
         user.setTitle(userDto.getTitle());
@@ -49,8 +50,9 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<User> getAllUsers(Pageable pageable) {
-        return null;
+        return userRepository.findAll(pageable);
     }
 
     @Override
