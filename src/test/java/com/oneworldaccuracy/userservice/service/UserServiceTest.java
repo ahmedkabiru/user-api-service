@@ -17,12 +17,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.function.Predicate;
-
+import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 
 
@@ -62,6 +61,7 @@ class UserServiceTest {
 
     private User toUser(UserDto userDto) {
         var user = new User();
+        user.setUserId(1L);
         user.setTitle(userDto.getTitle());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
@@ -96,4 +96,13 @@ class UserServiceTest {
     }
 
 
+    @Test
+    void findById() {
+        UserDto userDto = getUserDTO();
+        User user = toUser(userDto);
+        Mockito.when(userRepository.findById(any())).thenReturn(Optional.of(user));
+        Optional<User> getUserById = userService.findById(1L);
+        assertTrue(getUserById.isPresent());
+        assertEquals(user,getUserById.get());
+    }
 }
