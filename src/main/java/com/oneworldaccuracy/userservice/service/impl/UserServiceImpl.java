@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * @project onewa-user-service
@@ -43,6 +44,7 @@ public class UserServiceImpl  implements UserService {
         user.setEmail(userDto.getEmail());
         user.setMobile(userDto.getMobile());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setToken(UUID.randomUUID().toString());
         user.setRole(Role.valueOf(userDto.getRole()));
         user.setDateRegistered(LocalDateTime.now());
         user.setStatus(UserStatus.REGISTERED);

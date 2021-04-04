@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface UserRepository extends BasePagingRepository<User> {
 
     Optional<User> findByEmail(String email);
+
+    Optional<User> findByToken(String token);
 }
