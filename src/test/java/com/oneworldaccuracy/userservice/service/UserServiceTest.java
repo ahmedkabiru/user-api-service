@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -32,20 +33,21 @@ import static org.mockito.ArgumentMatchers.any;
 //@ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
-
-
     @Mock
     private UserRepository userRepository;
 
     @Mock
     private PasswordEncoder passwordEncoder;
 
+    @Mock
+    private MailService mailService;
+
     private UserService userService;
 
     @BeforeEach
     public void init() {
        MockitoAnnotations.openMocks(this);
-       userService = new UserServiceImpl(userRepository, passwordEncoder);
+       userService = new UserServiceImpl(userRepository, passwordEncoder,mailService);
     }
     public  UserDto getUserDTO() {
         UserDto userDto = new UserDto();
@@ -81,6 +83,7 @@ class UserServiceTest {
         Mockito.when(userRepository.save((any()))).thenReturn(user);
         User userCreated = userService.createUser(userDto);
         Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any());
+        Mockito.verify(mailService).sendVerificationEmail(userCreated);
         assertEquals(user.getEmail(), userCreated.getEmail());
         assertEquals(user.getPassword(), userCreated.getPassword());
         assertEquals(user.getStatus(), userCreated.getStatus());
@@ -125,6 +128,7 @@ class UserServiceTest {
         User user = toUser(getUserDTO());
         userService.deactivateUser(user);
         Mockito.verify(userRepository).save(any(User.class));
+        Mockito.verify(mailService).sendDeactivationEmail(user);
     }
 
     @Test

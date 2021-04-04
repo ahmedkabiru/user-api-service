@@ -5,8 +5,9 @@ import com.oneworldaccuracy.userservice.model.Role;
 import com.oneworldaccuracy.userservice.model.User;
 import com.oneworldaccuracy.userservice.model.UserStatus;
 import com.oneworldaccuracy.userservice.repository.UserRepository;
+import com.oneworldaccuracy.userservice.service.MailService;
 import com.oneworldaccuracy.userservice.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,17 +23,14 @@ import java.util.UUID;
  * @Author kabiruahmed on 04/04/2021
  */
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl  implements UserService {
 
     private final UserRepository userRepository;
 
-    private  final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final MailService mailService;
 
     @Override
     @Transactional
@@ -48,7 +46,9 @@ public class UserServiceImpl  implements UserService {
         user.setRole(Role.valueOf(userDto.getRole()));
         user.setDateRegistered(LocalDateTime.now());
         user.setStatus(UserStatus.REGISTERED);
-        return userRepository.save(user);
+        var  createUser = userRepository.save(user);
+        mailService.sendVerificationEmail(createUser);
+        return createUser;
     }
 
     @Override
@@ -77,6 +77,17 @@ public class UserServiceImpl  implements UserService {
     public void deactivateUser(User user) {
        user.setStatus(UserStatus.DEACTIVATED);
        userRepository.save(user);
+       mailService.sendDeactivationEmail(user);
+    }
+
+    @Transactional
+    @Override
+    public void activateUser(User user) {
+        user.setVerified(true);
+        user.setStatus(UserStatus.VERIFIED);
+        user.setDateVerified(LocalDateTime.now());
+        user.setToken(null);
+        userRepository.save(user);
     }
 
     @Override
@@ -90,4 +101,6 @@ public class UserServiceImpl  implements UserService {
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+
 }
