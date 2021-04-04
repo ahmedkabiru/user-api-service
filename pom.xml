@@ -12,7 +12,7 @@
 	<artifactId>onewa-user-service</artifactId>
 	<version>1.0.0</version>
 	<name>user-service</name>
-	<description>One World Accuracy User Service</description>
+	<description>User Service</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
