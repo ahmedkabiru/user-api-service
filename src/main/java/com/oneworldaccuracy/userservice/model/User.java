@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -39,16 +39,16 @@ public class User {
     @Column(name = "role")
     private Role role;
 
-    @Column(name = "date_registered", columnDefinition = "TIMESTAMP")
+    @Column(name = "date_registered",nullable = false)
     private LocalDateTime dateRegistered;
 
     @Column(name = "verified")
     private boolean verified;
 
-    @Column(name = "date_verified",columnDefinition = "TIMESTAMP")
+    @Column(name = "date_verified")
     private LocalDateTime dateVerified;
 
-    @Column(name = "date_deactivated", columnDefinition = "TIMESTAMP")
+    @Column(name = "date_deactivated")
     private LocalDateTime dateDeactivated;
 
     @Enumerated(EnumType.STRING)

@@ -22,14 +22,17 @@ public class VerificationToken {
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
-    private LocalDateTime issuedDateTime;
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
 
-    private LocalDateTime expiredDateTime;
+
+    @Column(name = "expiry_date")
+    private LocalDateTime expiryDate;
 
     public VerificationToken(){
         this.token = UUID.randomUUID().toString();
-        this.issuedDateTime = LocalDateTime.now();
-        this.expiredDateTime = this.issuedDateTime.plusDays(1);
+        this.createdDate = LocalDateTime.now();
+        this.expiryDate = this.createdDate.plusDays(1);
     }
 
 }
