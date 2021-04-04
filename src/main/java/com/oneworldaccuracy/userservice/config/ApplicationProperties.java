@@ -12,8 +12,7 @@ import org.springframework.stereotype.Component;
  */
 
 
-@Getter
-@Setter
+@Data
 @Component
 @ConfigurationProperties(ignoreUnknownFields = false, prefix = "app")
 public class ApplicationProperties {

@@ -28,14 +28,14 @@ import java.util.Locale;
 public class MailService {
 
 
-    @Qualifier("templateEngine")
-    private final SpringTemplateEngine templateEngine;
-
-    private final MessageSource messageSource;
-
     private final ApplicationProperties applicationProperties;
 
     private final JavaMailSender javaMailSender;
+
+    private final MessageSource messageSource;
+
+    @Qualifier("templateEngine")
+    private final SpringTemplateEngine templateEngine;
 
     private static final String USER = "user";
 
@@ -46,6 +46,7 @@ public class MailService {
     public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
         log.debug("Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
                 isMultipart, isHtml, to, subject, content);
+        log.debug("Email from" +applicationProperties.getMail().getFrom());
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, StandardCharsets.UTF_8.name());
@@ -77,7 +78,7 @@ public class MailService {
 
     @Async
     public void sendVerificationEmail(User user) {
-        sendEmailFromTemplate(user, "verificationEmail", "email.verification.title");
+        sendEmailFromTemplate(user, "verificationEmail", "email.activation.title");
     }
 
     @Async

@@ -12,4 +12,4 @@ spring:
 app:
   mail:
     base-url: http://localhost:9000
-    from: opeyemi.kabiru@yahoo.com
+    from: jekii.kabiru@gmail.com
