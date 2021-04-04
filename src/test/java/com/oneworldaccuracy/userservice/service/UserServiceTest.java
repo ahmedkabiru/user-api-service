@@ -126,4 +126,14 @@ class UserServiceTest {
         userService.deactivateUser(user);
         Mockito.verify(userRepository).save(any(User.class));
     }
+
+    @Test
+    void findByEmail() {
+        UserDto userDto = getUserDTO();
+        User user = toUser(userDto);
+        Mockito.when(userRepository.findByEmail(any())).thenReturn(Optional.of(user));
+        Optional<User> getUserById = userService.findByEmail("opeyemi.kabiru@yahoo.com");
+        assertTrue(getUserById.isPresent());
+        assertEquals(user,getUserById.get());
+    }
 }
