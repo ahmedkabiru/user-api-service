@@ -77,12 +77,12 @@ public class MailService {
 
     @Async
     public void sendVerificationEmail(User user) {
-        sendEmailFromTemplate(user, "verificationEmail", "email.verify.title");
+        sendEmailFromTemplate(user, "verificationEmail", "email.verification.title");
     }
 
     @Async
     public void sendDeactivationEmail(User user) {
-        sendEmailFromTemplate(user, "deactivationEmail", "email.deactivate.title");
+        sendEmailFromTemplate(user, "deactivationEmail", "email.deactivation.title");
     }
 
 

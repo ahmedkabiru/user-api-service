@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{email.deactivation.title}">User Deactivation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+</head>
+<body>
+<p th:text="#{email.greeting(${user.firstName})}">
+    Dear
+</p>
+<p th:text="#{email.deactivation.text}">
+    Your account has been deactivated, please reach out to the admin
+</p>
+<p>
+    <span th:text="#{email.footer}">Regards,</span>
+    <br/>
+    <em th:text="#{email.signature}">OneWorld Accuracy.</em>
+</p>
+</body>
+</html>
