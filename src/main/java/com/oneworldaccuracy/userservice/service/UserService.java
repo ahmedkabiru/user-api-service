@@ -13,7 +13,7 @@ import java.util.Optional;
  */
 public interface UserService {
 
-    void createUser(UserDto userDto);
+    User createUser(UserDto userDto);
 
     Page<User> getAllUsers(Pageable pageable);
 
