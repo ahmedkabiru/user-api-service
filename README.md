@@ -1,0 +1,2 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ac3659f8d95a4c9487917e2f5655afc0)](https://www.codacy.com/gh/ahmedkabiru/1wa-user-service/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ahmedkabiru/1wa-user-service&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/ac3659f8d95a4c9487917e2f5655afc0)](https://www.codacy.com/gh/ahmedkabiru/1wa-user-service/dashboard?utm_source=github.com&utm_medium=referral&utm_content=ahmedkabiru/1wa-user-service&utm_campaign=Badge_Coverage)
