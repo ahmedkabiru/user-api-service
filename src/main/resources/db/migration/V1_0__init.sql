@@ -1,6 +1,5 @@
-DROP TABLE IF EXISTS `users`;
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
