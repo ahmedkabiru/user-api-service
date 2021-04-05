@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "users")
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter

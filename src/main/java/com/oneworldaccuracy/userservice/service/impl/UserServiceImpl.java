@@ -59,23 +59,21 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(User user,UserDto userDto) {
+    public User updateUser(User user,UserDto userDto) {
         user.setTitle(userDto.getTitle());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setMobile(userDto.getMobile());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        if(userDto.getRole() != null) {
-            user.setRole(Role.valueOf(userDto.getRole()));
-        }
-        userRepository.save(user);
+        user.setRole(Role.valueOf(userDto.getRole()));
+        return userRepository.save(user);
     }
 
     @Override
     @Transactional
     public void deactivateUser(User user) {
        user.setStatus(UserStatus.DEACTIVATED);
+       user.setDateDeactivated(LocalDateTime.now());
        userRepository.save(user);
        mailService.sendDeactivationEmail(user);
     }

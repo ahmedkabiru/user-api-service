@@ -12,14 +12,16 @@ import org.springframework.stereotype.Component;
  */
 
 
-@Data
+@Getter
+@Setter
 @Component
 @ConfigurationProperties(ignoreUnknownFields = false, prefix = "app")
 public class ApplicationProperties {
 
     private final ApplicationProperties.Mail mail = new ApplicationProperties.Mail();
 
-    @Data
+    @Getter
+    @Setter
     public static class Mail {
         private String from = "";
         private String baseUrl = "";

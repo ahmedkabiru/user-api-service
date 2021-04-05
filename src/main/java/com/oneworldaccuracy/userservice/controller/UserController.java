@@ -49,10 +49,6 @@ public class UserController {
     @PutMapping(value = "{id}")
     public ResponseEntity<Object> updateUser(@PathVariable(value = "id") Long id, @Valid @RequestBody UserDto userDTO) {
         User user = userService.findById(id).orElseThrow(() -> new NotFoundException("User id "+ id.toString() + "not found"));
-        Optional<User> existingUser = userService.findByEmail(userDTO.getEmail());
-        if (existingUser.isPresent() && (!Objects.equals(user.getUserId(), id))) {
-            throw new BadRequestException("Email is already Taken");
-        }
         userService.updateUser(user, userDTO);
         return ResponseEntity.ok().build();
     }

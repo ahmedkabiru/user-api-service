@@ -8,19 +8,21 @@ import com.oneworldaccuracy.userservice.repository.UserRepository;
 import com.oneworldaccuracy.userservice.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,7 +32,7 @@ import static org.mockito.ArgumentMatchers.any;
  * @project onewa-user-service
  * @Author kabiruahmed on 04/04/2021
  */
-//@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
     @Mock
@@ -46,7 +48,6 @@ class UserServiceTest {
 
     @BeforeEach
     public void init() {
-       MockitoAnnotations.openMocks(this);
        userService = new UserServiceImpl(userRepository, passwordEncoder,mailService);
     }
     public  UserDto getUserDTO() {
@@ -112,16 +113,31 @@ class UserServiceTest {
     @Test
     void updateUser() {
         User user = toUser(getUserDTO());
-        UserDto userDtoUpdated = new UserDto();
+        UserDto userDtoUpdated = getUserDTO();
         userDtoUpdated.setMobile("08033292804");
         user.setMobile(userDtoUpdated.getMobile());
         Mockito.when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
         userService.updateUser(user,userDtoUpdated);
         Optional<User> userOptional = userRepository.findById(user.getUserId());
+        Mockito.verify(userRepository).save(any(User.class));
         assertTrue(userOptional.isPresent());
         assertThat(userOptional.get().getMobile()).isEqualTo(userDtoUpdated.getMobile());
     }
 
+
+    @Test
+    void activateUser() {
+        User user = toUser(getUserDTO());
+        user.setStatus(UserStatus.VERIFIED);
+        user.setToken(null);
+        Mockito.when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
+        userService.activateUser(user);
+        Optional<User> userOptional = userRepository.findById(user.getUserId());
+        Mockito.verify(userRepository).save(any(User.class));
+        assertTrue(userOptional.isPresent());
+        assertThat(userOptional.get().getStatus()).isEqualTo(UserStatus.VERIFIED);
+        assertThat(userOptional.get().getToken()).isNull();
+    }
 
     @Test
     void deactivateUser() {
