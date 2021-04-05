@@ -4,7 +4,11 @@ import com.oneworldaccuracy.userservice.config.ApplicationProperties;
 import com.oneworldaccuracy.userservice.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Captor;
+import org.mockito.Spy;
+import org.mockito.ArgumentCaptor;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
@@ -16,12 +20,14 @@ import javax.mail.internet.MimeMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 
 /**
  * @project onewa-user-service
  * @Author kabiruahmed on 04/04/2021
  */
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class MailServiceTest {
 
     @Autowired
@@ -44,7 +50,6 @@ class MailServiceTest {
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this);
         doNothing().when(javaMailSender).send(any(MimeMessage.class));
         mailService = new MailService(properties, javaMailSender, messageSource, templateEngine);
     }
@@ -52,7 +57,7 @@ class MailServiceTest {
     @Test
     void sendEmail() throws Exception {
         mailService.sendEmail("opeyemi.kabiru@yahoo.com", "testInvite", "inviteContent", false, false);
-        Mockito.verify(javaMailSender).send(messageCaptor.capture());
+        verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         assertThat(message.getSubject()).isEqualTo("testInvite");
         assertThat(message.getContent().toString()).hasToString("inviteContent");
@@ -69,7 +74,7 @@ class MailServiceTest {
         user.setLastName("Kabiru");
         user.setEmail("opeyemi.kabiru@yahoo.com");
         mailService.sendEmailFromTemplate(user, "verificationEmail", "email.activation.title");
-        Mockito.verify(javaMailSender).send(messageCaptor.capture());
+        verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         assertThat(message.getAllRecipients()[0].toString()).hasToString(user.getEmail());
         assertThat(message.getFrom()[0].toString()).hasToString(properties.getMail().getFrom());
@@ -85,7 +90,7 @@ class MailServiceTest {
         user.setLastName("Kabiru");
         user.setEmail("opeyemi.kabiru@yahoo.com");
         mailService.sendVerificationEmail(user);
-        Mockito.verify(javaMailSender).send(messageCaptor.capture());
+        verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         assertThat(message.getAllRecipients()[0].toString()).hasToString(user.getEmail());
         assertThat(message.getFrom()[0].toString()).hasToString(properties.getMail().getFrom());
@@ -100,7 +105,7 @@ class MailServiceTest {
         user.setLastName("Kabiru");
         user.setEmail("opeyemi.kabiru@yahoo.com");
         mailService.sendDeactivationEmail(user);
-        Mockito.verify(javaMailSender).send(messageCaptor.capture());
+        verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         assertThat(message.getAllRecipients()[0].toString()).hasToString(user.getEmail());
         assertThat(message.getFrom()[0].toString()).hasToString(properties.getMail().getFrom());
