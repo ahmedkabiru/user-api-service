@@ -10,8 +10,4 @@ spring:
     enabled: true
     baseline-on-migrate: true
 
-app:
-  mail:
-    base-url: http://localhost:9000
-    from: noreply@globalaccelerex.com
 

@@ -20,7 +20,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-    
+
     @Bean
     public Docket apiDocket() {
 
