@@ -33,7 +33,6 @@ The application is structured into the following packages;
 - **controller** - rest endpoints and route mapping
 - **repository** - handles query and data persistence
   <p align="left">
-    <br>
     <img src="https://github.com/ahmedkabiru/1wa-user-service/blob/main/docs/images/project-structure.png" alt="project structure"></a>
   </p>
 ## Running the server locally ##
