@@ -17,13 +17,15 @@ public interface UserService {
 
     Page<User> getAllUsers(Pageable pageable);
 
-    User updateUser(User user,UserDto userDto);
+    void updateUser(User user, UserDto userDto);
 
     void deactivateUser(User user);
 
-    void activateUser(User user);
+    void verifyUser(User user);
 
     Optional<User> findById(Long id);
 
     Optional<User> findByEmail(String email);
+
+    Optional<User> findByToken(String token);
 }

@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
@@ -64,6 +65,7 @@ class UserControllerTest {
         user.setLastName("Kabiru");
         user.setEmail("opeyemi.kabiru@yahoo.com");
         user.setPassword("12345678");
+        user.setToken(UUID.randomUUID().toString());
         user.setStatus(UserStatus.REGISTERED);
     }
 
@@ -163,6 +165,28 @@ class UserControllerTest {
         Long userId = 2L;
         given(userService.findById(1L)).willReturn(Optional.of(user));
         this.mockMvc.perform(delete("/api/users/{id}",userId))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof NotFoundException));
+    }
+
+
+    @Test
+    void verifyUserShouldBeSuccessful() throws  Exception{
+        String token = user.getToken();
+        given(userService.findByToken(token)).willReturn(Optional.of(user));
+        doNothing().when(userService).verifyUser(user);
+        this.mockMvc.perform(
+                get("/api/users/verify")
+                        .param("token",token)
+        ).andExpect(status().isOk());
+        verify(userService, times(1)).verifyUser(user);
+    }
+
+    @Test
+    void verifyUserTokenNotFound() throws Exception {
+        given(userService.findByToken(user.getToken())).willReturn(Optional.of(user));
+        this.mockMvc.perform(get("/api/users/verify")
+                .param("token",UUID.randomUUID().toString()))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof NotFoundException));
     }

@@ -29,25 +29,3 @@ ALTER TABLE `users`
 --
 ALTER TABLE `users`
   MODIFY `user_id` bigint(20) NOT NULL AUTO_INCREMENT;
-
-
-
---
--- Table structure for table `verification_token`
---
-
-CREATE TABLE IF NOT EXISTS `verification_token` (
-  `id` bigint(20) NOT NULL,
-  `created_date` datetime DEFAULT NULL,
-  `expiry_date` datetime DEFAULT NULL,
-  `token` varchar(255) DEFAULT NULL,
-  `user_id` bigint(20) NOT NULL
-) ENGINE=MyISAM;
-
-
---
--- Indexes for table `verification_token`
---
-ALTER TABLE `verification_token`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK3asw9wnv76uxu3kr1ekq4i1ld` (`user_id`);

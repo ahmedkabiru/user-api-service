@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -73,6 +74,7 @@ class UserServiceTest {
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setRole(Role.valueOf(userDto.getRole()));
         user.setStatus(UserStatus.REGISTERED);
+        user.setToken(UUID.randomUUID().toString());
         user.setDateRegistered(LocalDateTime.now());
         return  user;
     }
@@ -131,7 +133,7 @@ class UserServiceTest {
         user.setStatus(UserStatus.VERIFIED);
         user.setToken(null);
         Mockito.when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
-        userService.activateUser(user);
+        userService.verifyUser(user);
         Optional<User> userOptional = userRepository.findById(user.getUserId());
         Mockito.verify(userRepository).save(any(User.class));
         assertTrue(userOptional.isPresent());
@@ -155,5 +157,15 @@ class UserServiceTest {
         Optional<User> getUserById = userService.findByEmail("opeyemi.kabiru@yahoo.com");
         assertTrue(getUserById.isPresent());
         assertEquals(user,getUserById.get());
+    }
+
+    @Test
+    void findByToken() {
+        UserDto userDto = getUserDTO();
+        User user = toUser(userDto);
+        Mockito.when(userRepository.findByToken(any())).thenReturn(Optional.of(user));
+        Optional<User> getUserById = userService.findByToken(user.getToken());
+        assertTrue(getUserById.isPresent());
+        assertEquals(user.getToken(),getUserById.get().getToken());
     }
 }

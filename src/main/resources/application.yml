@@ -13,5 +13,5 @@ spring:
 app:
   mail:
     base-url: http://localhost:9000
-    from: jekii.kabiru@gmail.com
+    from: noreply@globalaccelerex.com
 

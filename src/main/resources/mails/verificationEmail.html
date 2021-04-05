@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="#{email.activation.title}">User activation</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
 </head>
 <body>
-<p th:text="#{email.activation.greeting(${user.firstName})}">
+<p th:text="#{email.greeting(${user.firstName})}">
     Dear
 </p>
 <p th:text="#{email.activation.text}">
     Your account has been created, please click on the URL below to activate it:
 </p>
 <p>
-    <a th:href="@{|${baseUrl}/activate?key=${user.token}|}"
-       th:text="@{|${baseUrl}/activate?key=${user.token}|}">Activation Link</a>
+    <a th:href="@{|${baseUrl}/api/users/verify?token=${user.token}|}"
+       th:text="@{|${baseUrl}/api/users/verify?token=${user.token}|}">Activation Link</a>
 </p>
 <p>
     <span th:text="#{email.footer}">Regards, </span>

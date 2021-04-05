@@ -47,20 +47,27 @@ public class UserController {
 
     @PutMapping(value = "{id}")
     public ResponseEntity<Object> updateUser(@PathVariable(value = "id") Long id, @Valid @RequestBody UserDto userDTO) {
-        User user = userService.findById(id).orElseThrow(() -> new NotFoundException("User id "+ id.toString() + "not found"));
+        User user = userService.findById(id).orElseThrow(() -> new NotFoundException("User not found with id "+ id.toString()));
         userService.updateUser(user, userDTO);
         return ResponseEntity.ok().build();
     }
 
 
+
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Object> deactivateUser( @PathVariable(value = "id") Long id) {
-        User user = userService.findById(id).orElseThrow(() ->new NotFoundException("User id "+ id.toString() + "not found"));
+        User user = userService.findById(id).orElseThrow(() ->new NotFoundException("User not found with id "+ id.toString()));
         userService.deactivateUser(user);
         return ResponseEntity.ok().build();
     }
 
-    
+
+    @GetMapping(path = "/verify" )
+    public ResponseEntity<Object> verifyUser(@RequestParam("token") String token){
+        User user = userService.findByToken(token).orElseThrow(() ->new NotFoundException("Token id "+ token + "not found"));
+        userService.verifyUser(user);
+        return ResponseEntity.ok().build();
+    }
 
 
 

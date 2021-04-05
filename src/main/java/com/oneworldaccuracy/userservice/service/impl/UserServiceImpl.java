@@ -59,14 +59,14 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     @Transactional
-    public User updateUser(User user,UserDto userDto) {
+    public void updateUser(User user, UserDto userDto) {
         user.setTitle(userDto.getTitle());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setMobile(userDto.getMobile());
         user.setRole(Role.valueOf(userDto.getRole()));
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class UserServiceImpl  implements UserService {
 
     @Transactional
     @Override
-    public void activateUser(User user) {
+    public void verifyUser(User user) {
         user.setVerified(true);
         user.setStatus(UserStatus.VERIFIED);
         user.setDateVerified(LocalDateTime.now());
@@ -100,5 +100,9 @@ public class UserServiceImpl  implements UserService {
         return userRepository.findByEmail(email);
     }
 
-
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<User> findByToken(String token) {
+        return userRepository.findByToken(token);
+    }
 }
