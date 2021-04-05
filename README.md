@@ -83,7 +83,7 @@ http://localhost:9001/swagger-ui/index.html
 
 <p align="center">
     <br>
-    <img width="600" src="https://github.com/ahmedkabiru/1wa-user-service/blob/main/docs/images/swagger-screens/swagger.png">
+    <img width="600" src="https://github.com/ahmedkabiru/1wa-user-service/blob/main/docs/images/swagger.png">
 </p>
 
 
