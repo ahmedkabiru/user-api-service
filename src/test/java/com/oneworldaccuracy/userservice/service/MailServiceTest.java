@@ -63,6 +63,22 @@ class MailServiceTest {
 
 
     @Test
+    void testSendEmailFromTemplate() throws Exception {
+        var user = new User();
+        user.setFirstName("Ahmed");
+        user.setLastName("Kabiru");
+        user.setEmail("opeyemi.kabiru@yahoo.com");
+        mailService.sendEmailFromTemplate(user, "verificationEmail", "email.activation.title");
+        Mockito.verify(javaMailSender).send(messageCaptor.capture());
+        MimeMessage message = messageCaptor.getValue();
+        assertThat(message.getAllRecipients()[0].toString()).hasToString(user.getEmail());
+        assertThat(message.getFrom()[0].toString()).hasToString(properties.getMail().getFrom());
+        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
+    }
+
+
+
+    @Test
     void sendVerificationEmail() throws  Exception {
         var user = new User();
         user.setFirstName("Ahmed");
