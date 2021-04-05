@@ -2,7 +2,7 @@
 -- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE IF NOT EXISTS users (
   `user_id` bigint(20) NOT NULL,
   `title` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
@@ -21,11 +21,11 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- Indexes for table `users`
 --
-ALTER TABLE `users`
+ALTER TABLE users
   ADD PRIMARY KEY (`user_id`);
 
 --
 -- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `users`
+ALTER TABLE users
   MODIFY `user_id` bigint(20) NOT NULL AUTO_INCREMENT;

@@ -1,8 +1,15 @@
 package com.oneworldaccuracy.userservice.model;
 
-import lombok.*;
-
-import javax.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Enumerated;
+import javax.persistence.GenerationType;
+import javax.persistence.EnumType;
 import java.time.LocalDateTime;
 
 @Entity(name = "users")
@@ -11,8 +18,9 @@ import java.time.LocalDateTime;
 @Setter
 public class User {
 
-    @Column(name = "user_id", nullable = false)
+
     @Id
+    @Column(name = "user_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
