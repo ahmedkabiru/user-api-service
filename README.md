@@ -1,7 +1,4 @@
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ac3659f8d95a4c9487917e2f5655afc0)](https://www.codacy.com/gh/ahmedkabiru/1wa-user-service/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ahmedkabiru/1wa-user-service&amp;utm_campaign=Badge_Grade)  
-[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/ac3659f8d95a4c9487917e2f5655afc0)](https://www.codacy.com/gh/ahmedkabiru/1wa-user-service/dashboard?utm_source=github.com&utm_medium=referral&utm_content=ahmedkabiru/1wa-user-service&utm_campaign=Badge_Coverage)
-
-
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ac3659f8d95a4c9487917e2f5655afc0)](https://www.codacy.com/gh/ahmedkabiru/1wa-user-service/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ahmedkabiru/1wa-user-service&amp;utm_campaign=Badge_Grade)  [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/ac3659f8d95a4c9487917e2f5655afc0)](https://www.codacy.com/gh/ahmedkabiru/1wa-user-service/dashboard?utm_source=github.com&utm_medium=referral&utm_content=ahmedkabiru/1wa-user-service&utm_campaign=Badge_Coverage)
 ## User Service
 The user service implements the following actions;
 1. Create a user
@@ -33,7 +30,7 @@ The application is structured into the following packages;
 - **controller** - rest endpoints and route mapping
 - **repository** - handles query and data persistence
   <p align="left">  
-    <img src="https://github.com/ahmedkabiru/1wa-user-service/blob/main/docs/images/project-structure-1.png" alt="project structure"/>
+    <img src="https://github.com/ahmedkabiru/1wa-user-service/blob/main/docs/images/project-structure-1.png" alt="project structure">  
   </p>  
 ## Running the server locally
 Before running the application install MySQL with "brew install mysql" for MAC user.  
