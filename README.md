@@ -75,3 +75,14 @@ http://localhost:9001/swagger-ui/index.html
     <br>  
     <img width="600" src="https://github.com/ahmedkabiru/1wa-user-service/blob/main/docs/images/swagger.png">  
 </p>
+
+## Monitoring and Metrics
+Actuator endpoint expose the following operation:
+
+- **/metrics** Shows “metrics” information for the current application.
+
+- **/health** Shows application health information.
+
+- **/info** Displays arbitrary application info.
+
+All the actuator endpoints is available via <http://localhost:9001/actuator>.
