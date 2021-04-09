@@ -9,7 +9,7 @@ The user service implements the following actions;
 
 ## Technology
 Following libraries were used during the development of this service:
-- **Java 11** - Language
+- **Java 16** - Language
 - **Spring Boot** - Server side framework
 - **Maven** - Build tool
 - **Docker** - Containerizing framework
