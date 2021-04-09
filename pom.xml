@@ -8,7 +8,7 @@
 		<version>2.4.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.oneworldaccuracy</groupId>
+	<groupId>com.hamsoft</groupId>
 	<artifactId>onewa-user-service</artifactId>
 	<version>1.0.0</version>
 	<name>user-service</name>
