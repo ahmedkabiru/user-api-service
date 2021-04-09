@@ -30,7 +30,7 @@ The application is structured into the following packages;
 - **controller** - rest endpoints and route mapping
 - **repository** - handles query and data persistence
   <p align="left">  
-    <img src="https://github.com/ahmedkabiru/1wa-user-service/blob/main/docs/images/project-structure-1.png" alt="project structure">  
+    <img src="https://github.com/ahmedkabiru/1wa-user-service/blob/main/docs/images/project-structure-2.png" alt="project structure">  
   </p>  
 ## Data Transfer Object With Record Class
 The DTO was created using Java 16 Record class 
