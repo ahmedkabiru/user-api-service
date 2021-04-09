@@ -47,32 +47,34 @@ class UserServiceTest {
 
     private UserService userService;
 
+
     @BeforeEach
     public void init() {
        userService = new UserServiceImpl(userRepository, passwordEncoder,mailService);
     }
     public UserDto getUserDTO() {
-        UserDto userDto = new UserDto();
-        userDto.setTitle("Mr");
-        userDto.setFirstName("Ahmed");
-        userDto.setLastName("Kabiru");
-        userDto.setEmail("opeyemi.kabiru@yahoo.com");
-        userDto.setRole("ADMIN");
-        userDto.setMobile("08117713143");
-        userDto.setPassword("123456");
-        return userDto;
+
+        return new UserDto(
+                 "Mr",
+                 "Ahmed",
+                 "Kabiru",
+                 "opeyemi.kabiru@yahoo.com",
+                 "08117713143",
+                 "12345678",
+                 "ADMIN"
+         );
     }
 
     private User toUser(UserDto userDto) {
         var user = new User();
         user.setUserId(1L);
-        user.setTitle(userDto.getTitle());
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setMobile(userDto.getMobile());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setRole(Role.valueOf(userDto.getRole()));
+        user.setTitle(userDto.title());
+        user.setFirstName(userDto.firstName());
+        user.setLastName(userDto.lastName());
+        user.setMobile(userDto.mobile());
+        user.setEmail(userDto.email());
+        user.setPassword(passwordEncoder.encode(userDto.password()));
+        user.setRole(Role.valueOf(userDto.role()));
         user.setStatus(UserStatus.REGISTERED);
         user.setToken(UUID.randomUUID().toString());
         user.setDateRegistered(LocalDateTime.now());
@@ -115,15 +117,22 @@ class UserServiceTest {
     @Test
     void updateUser() {
         User user = toUser(getUserDTO());
-        UserDto userDtoUpdated = getUserDTO();
-        userDtoUpdated.setMobile("08033292804");
-        user.setMobile(userDtoUpdated.getMobile());
+        UserDto userDtoUpdated = new UserDto(
+                "Mr",
+                "Ahmed",
+                "Kabiru",
+                "opeyemi.kabiru@yahoo.com",
+                "08117713143",
+                "12345678",
+                "ADMIN"
+        );
+        user.setMobile(userDtoUpdated.mobile());
         Mockito.when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
         userService.updateUser(user,userDtoUpdated);
         Optional<User> userOptional = userRepository.findById(user.getUserId());
         Mockito.verify(userRepository).save(any(User.class));
         assertTrue(userOptional.isPresent());
-        assertThat(userOptional.get().getMobile()).isEqualTo(userDtoUpdated.getMobile());
+        assertThat(userOptional.get().getMobile()).isEqualTo(userDtoUpdated.mobile());
     }
 
 

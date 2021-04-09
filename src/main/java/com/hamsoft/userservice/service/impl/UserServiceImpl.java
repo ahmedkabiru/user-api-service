@@ -34,16 +34,16 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     @Transactional
-    public User createUser(UserDto userDto) {
+    public User createUser(UserDto userDto){
         var user = new User();
-        user.setTitle(userDto.getTitle());
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-        user.setMobile(userDto.getMobile());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setTitle(userDto.title());
+        user.setFirstName(userDto.firstName());
+        user.setLastName(userDto.lastName());
+        user.setEmail(userDto.email());
+        user.setMobile(userDto.mobile());
+        user.setPassword(passwordEncoder.encode(userDto.password()));
         user.setToken(UUID.randomUUID().toString());
-        user.setRole(Role.valueOf(userDto.getRole()));
+        user.setRole(Role.valueOf(userDto.role()));
         user.setDateRegistered(LocalDateTime.now());
         user.setStatus(UserStatus.REGISTERED);
         var  createUser = userRepository.save(user);
@@ -52,7 +52,6 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Page<User> getAllUsers(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
@@ -60,12 +59,12 @@ public class UserServiceImpl  implements UserService {
     @Override
     @Transactional
     public void updateUser(User user, UserDto userDto) {
-        user.setTitle(userDto.getTitle());
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-        user.setMobile(userDto.getMobile());
-        user.setRole(Role.valueOf(userDto.getRole()));
+        user.setTitle(userDto.title());
+        user.setFirstName(userDto.firstName());
+        user.setLastName(userDto.lastName());
+        user.setEmail(userDto.email());
+        user.setMobile(userDto.mobile());
+        user.setRole(Role.valueOf(userDto.role()));
         userRepository.save(user);
     }
 
@@ -89,19 +88,16 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<User> findByToken(String token) {
         return userRepository.findByToken(token);
     }

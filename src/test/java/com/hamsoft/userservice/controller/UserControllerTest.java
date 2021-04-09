@@ -55,6 +55,7 @@ class UserControllerTest {
     private ObjectMapper objectMapper;
 
     private User user;
+    private UserDto userDto;
     @BeforeEach
     public void init() {
         user = new User();
@@ -67,17 +68,22 @@ class UserControllerTest {
         user.setPassword("12345678");
         user.setToken(UUID.randomUUID().toString());
         user.setStatus(UserStatus.REGISTERED);
+
+         userDto = new UserDto(
+                     "Mr",
+                 "Ahmed",
+                 "Kabiru",
+                          "opeyemi.kabiru@yahoo.com",
+                 "08117713143",
+                 "12345678",
+                 "USER"
+         );
     }
 
     @Test
     void shouldCreateNewUser() throws Exception {
         given(userService.createUser(any(UserDto.class))).willReturn(user);
-        var userDto = new UserDto();
-        userDto.setFirstName("Ahmed");
-        userDto.setMobile("08117713143");
-        userDto.setLastName("Kabiru");
-        userDto.setEmail("opeyemi.kabiru@yahoo.com");
-        userDto.setPassword("12345678");
+
         MockHttpServletResponse response = this.mockMvc.perform(post("/api/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDto)))
@@ -87,13 +93,7 @@ class UserControllerTest {
 
     @Test
     void assertBadRequestStatusIfUserAlreadyRegistered() throws Exception {
-        var userDto = new UserDto();
-        userDto.setFirstName("Ahmed");
-        userDto.setMobile("08117713143");
-        userDto.setLastName("Kabiru");
-        userDto.setEmail("opeyemi.kabiru@yahoo.com");
-        userDto.setPassword("12345678");
-        given(userService.findByEmail(userDto.getEmail())).willReturn(Optional.of(user));
+        given(userService.findByEmail(userDto.email())).willReturn(Optional.of(user));
         MvcResult result = this.mockMvc.perform(post("/api/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDto)))
@@ -105,12 +105,6 @@ class UserControllerTest {
     @Test
     void shouldUpdateUser() throws Exception {
         Long userId = 1L;
-        var userDto = new UserDto();
-        userDto.setFirstName("Ahmed");
-        userDto.setMobile("08117713143");
-        userDto.setLastName("Opeyemi");
-        userDto.setEmail("opeyemi.kabiru@yahoo.com");
-        userDto.setPassword("12345678");
         given(userService.findById(userId)).willReturn(Optional.of(user));
         MockHttpServletResponse response =    this.mockMvc.perform(put("/api/users/{id}", userId)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -122,12 +116,6 @@ class UserControllerTest {
     @Test
     void updateUserNotFound() throws Exception {
         Long userId = 2L;
-        var userDto = new UserDto();
-        userDto.setFirstName("Ahmed");
-        userDto.setMobile("08117713143");
-        userDto.setLastName("Kabiru");
-        userDto.setEmail("opeyemi.kabiru@yahoo.com");
-        userDto.setPassword("12345678");
         given(userService.findById(1L)).willReturn(Optional.of(user));
         MvcResult result = this.mockMvc.perform(put("/api/users/{id}",userId)
                 .contentType(MediaType.APPLICATION_JSON)

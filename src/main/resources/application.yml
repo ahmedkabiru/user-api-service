@@ -1,5 +1,8 @@
 server:
   port: 9001
+  error:
+    include-message: always
+
 
 spring:
   datasource:

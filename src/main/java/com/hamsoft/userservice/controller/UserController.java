@@ -37,7 +37,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Object> createUser(@Valid @RequestBody UserDto userDTO){
-        if (userService.findByEmail(userDTO.getEmail()).isPresent()) {
+        if (userService.findByEmail(userDTO.email()).isPresent()) {
             throw new BadRequestException("Email is already Taken");
         }
         userService.createUser(userDTO);
