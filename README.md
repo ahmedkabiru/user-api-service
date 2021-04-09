@@ -10,7 +10,7 @@ The user service implements the following actions;
 ## Technology
 Following libraries were used during the development of this service:
 - **Java 16** - Language
-- **Spring Boot** - Server side framework
+- **Spring Boot 2.4.4** - Server side framework
 - **Maven** - Build tool
 - **Docker** - Containerizing framework
 - **MySQL** - Relational database
@@ -32,6 +32,42 @@ The application is structured into the following packages;
   <p align="left">  
     <img src="https://github.com/ahmedkabiru/1wa-user-service/blob/main/docs/images/project-structure-1.png" alt="project structure">  
   </p>  
+## Data Transfer Object With Record Class
+The DTO was created using Java 16 Record class 
+```  
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public record  UserDto(
+        @NotBlank(message = "title is required")
+        @JsonProperty("title")
+        String title,
+
+        @NotBlank(message = "firstname is required")
+        @JsonProperty("firstName")
+        String firstName,
+
+        @NotBlank(message = "lastname is required")
+        @JsonProperty("lastName")
+        String lastName,
+
+        @Email(message = "please provide a valid email address")
+        @JsonProperty("email")
+        String email,
+
+        @NotBlank(message = "mobile number is required")
+        @JsonProperty("mobile")
+        String mobile,
+
+        @NotBlank(message = "password is required")
+        @JsonProperty("password")
+        String password,
+
+        @NotNull(message = "specify at least one role")
+        @JsonProperty("role")
+        String role
+) { }
+
+```
 ## Running the server locally
 Before running the application install MySQL with "brew install mysql" for MAC user.  
 Update the application.yml with your MySQL credentials

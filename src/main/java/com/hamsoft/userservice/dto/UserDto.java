@@ -44,6 +44,4 @@ public record  UserDto(
         @NotNull(message = "specify at least one role")
         @JsonProperty("role")
         String role
-) {
-
-}
+) { }
