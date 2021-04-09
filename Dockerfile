@@ -1,4 +1,4 @@
-FROM openjdk:11-jre-slim
+FROM openjdk:16-jdk-alpine
 
 # Add Maintainer Info
 LABEL maintainer="opeyemi.kabiru@yahoo.com"
