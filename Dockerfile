@@ -3,7 +3,7 @@ FROM openjdk:16-jdk-alpine
 # Add Maintainer Info
 LABEL maintainer="opeyemi.kabiru@yahoo.com"
 
-ARG JAR_FILE=target/onewa-user-service.jar
+ARG JAR_FILE=target/user-service.jar
 
 WORKDIR /opt/app
 

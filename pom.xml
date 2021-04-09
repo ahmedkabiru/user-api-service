@@ -108,7 +108,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>onewa-user-service</finalName>
+		<finalName>user-service</finalName>
 		<plugins>
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
